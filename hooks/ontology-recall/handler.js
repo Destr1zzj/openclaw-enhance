@@ -214,6 +214,7 @@ async function extractAutoSave(userMsg, assistantResp) {
     || userMsg.match(/(?:npm install|pip install|uv add|pnpm add|yarn add)\s+([a-zA-Z0-9_-]+)/i)
     || userMsg.match(/装(?:一个)?(?:个)?[\s'"]*([a-zA-Z0-9_-]+)(?:skill|技能|插件)/i)
     || userMsg.match(/(?:add|install)\s+([a-zA-Z0-9_-]+)\s+(?:to|with)/i)
+    || userMsg.match(/(?:下一个|给安排一个|给我搞一个|顺便装一下|顺手装|加一个|顺手加|加个新技能|加个功能|添一个|装上|搞上|安上|下个\s+|搞个\s+|整一个|来个\s+|上个\s+)[\s'"]*([a-zA-Z0-9_-]+)/i)
     || assistantResp.match(/成功安装.*?[\s]['"]?([a-zA-Z0-9_-]+)['"]?/i)
     || assistantResp.match(/added\s+([a-zA-Z0-9_-]+)\s+to/i)
     || assistantResp.match(/successfully installed\s+([a-zA-Z0-9_-]+)/i);
@@ -349,7 +350,7 @@ async function extractAutoSave(userMsg, assistantResp) {
 
   // ── Pattern 7: Bug 发现 ─────────────────────────────────────────────────
   // 匹配：发现bug / 遇到报错 / 程序崩溃了 / 有个bug / 复现了 / 修复了xxx / 修了个bug / 控制台报错 / 有个问题 / 出问题了 / error / 异常 / 崩了 / 挂了 / 坏掉了 / 坏事了 / 完蛋了 / 不对了 / 出岔子了 / 翻车了 / 掉链子了 / 扯拐了 / 卡壳了 / 死机了 / 蓝屏了 / 白屏了 / 炸了 / 炸裂了 / 不 work 了 / 起不来了 / 跑不动了 / 烂了 / 废了这个 / 废了 / 坏 / 坏了 / 不行了 / 不好使了 / 用不了 / 失灵了 / 失效了 / 没反应了 / 什么都没发生
-  if (/发现.*(?:bug|报错|错误|问题)|遇到.*(?:bug|报错|问题)|程序.*(?:崩溃|报错)|有个.*(?:bug|问题)|bug.*(?:复现|修复)|复现.*(?:bug|问题)|修复.*(?:bug|问题)|修.*(?:bug|报错)|解决.*(?:bug|问题)|修好了.*bug|报.*错|控制台.*(?:报错|错误)|console.*(?:error|报错)|出.*问题了|有个.*问题|问题.*出现了|出.*bug|出.*故障|故障了|报错信息|error.*(?:出现|发生)|异常.*(?:出现|捕获)|发现.*(?:error|异常)|遇到.*(?:error|异常)|runtime.*(?:error|exception)|空指针|空引用|undefined.*(?:is|not)|null.*(?:error)|找不到.*(?:文件|模块|依赖)|加载.*(?:失败|错误)|syntax.*error/i.test(userMsg)) {
+  if (/发现.*(?:bug|报错|错误|问题)|遇到.*(?:bug|报错|问题)|程序.*(?:崩溃|报错)|有个.*(?:bug|问题)|bug.*(?:复现|修复)|复现.*(?:bug|问题)|修复.*(?:bug|问题)|修.*(?:bug|报错)|解决.*(?:bug|问题)|修好了.*bug|报.*错|控制台.*(?:报错|错误)|console.*(?:error|报错)|出.*问题了|有个.*问题|问题.*出现了|出.*bug|出.*故障|故障了|报错信息|error.*(?:出现|发生)|异常.*(?:出现|捕获)|发现.*(?:error|异常)|遇到.*(?:error|异常)|runtime.*(?:error|exception)|空指针|空引用|undefined.*(?:is|not)|null.*(?:error)|找不到.*(?:文件|模块|依赖)|加载.*(?:失败|错误)|syntax.*error|崩了|挂了|坏掉了|坏事了|完蛋了|不对了|出岔子了|翻车了|掉链子了|扯拐了|死机了|蓝屏了|白屏了|炸了|炸裂了|不\s*work.*了|起不来了|跑不动了|烂了|废了|废了这个|坏|坏了|不行了|不好使了|用不了|失灵了|失效了|没反应了|什么都没发生/i.test(userMsg)) {
     const bugMatch = userMsg.match(/(?:发现|遇到|复现|修复|出现).{0,30}/);
     return {
       id: `bug_${dateStr}_${String(Math.floor(Math.random() * 999)).padStart(3, '0')}`,
